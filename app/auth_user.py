@@ -68,7 +68,6 @@ class UserUseCases:
             data = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
         
         except JWTError:
-            print(JWTError)
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid access token!")
         
         user_on_db = self.db_session.query(UserModel).filter_by(username=data['sub']).first()
