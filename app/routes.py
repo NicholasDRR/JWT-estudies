@@ -3,15 +3,23 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.schemas import User
-from app.db.depends import get_db_session
+from app.db.depends import get_db_session, token_verifier
 from app.auth_user import UserUseCases
 from app.db.connection import Session
 
-router = APIRouter(
+user_router = APIRouter(
     prefix="/user"
 )
 
-@router.post("/register")
+test_router = APIRouter(
+    prefix="/test",
+    dependencies=[Depends(token_verifier)]
+)
+
+
+
+
+@user_router.post("/register")
 def create_user(user: User, db_session: Session = Depends(get_db_session)):
     
     uc = UserUseCases(db_session)
@@ -21,7 +29,7 @@ def create_user(user: User, db_session: Session = Depends(get_db_session)):
 
 
 
-@router.post("/login")
+@user_router.post("/login")
 def login_user(request_form_user: OAuth2PasswordRequestForm = Depends(), db_session: Session = Depends(get_db_session)):
     
     uc = UserUseCases(db_session)
@@ -32,4 +40,8 @@ def login_user(request_form_user: OAuth2PasswordRequestForm = Depends(), db_sess
     
     auth_data = uc.user_login(user)
     return JSONResponse(content=auth_data, status_code=status.HTTP_200_OK)
-    
+
+
+@test_router.get("/test")
+def test_user_verify():
+    return 'Its working'
