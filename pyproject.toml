@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "jwt-estudies"
+version = "0.1.0"
+description = ""
+authors = ["NicholasDRR <nicholasreis00@gmail.com>"]
+readme = "README.md"
+packages = [{include = "auth_fastapi"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+psycopg2-binary = "^2.9.7"
+python-decouple = "^3.8"
+fastapi = "^0.103.0"
+uvicorn = "^0.23.2"
+sqlalchemy = "^2.0.20"
+alembic = "^1.11.3"
+passlib = "^1.7.4"
+python-jose = "^3.3.0"
+python-multipart = "^0.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
